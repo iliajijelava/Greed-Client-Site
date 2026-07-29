@@ -113,3 +113,55 @@
   margin-top: 20px;
   letter-spacing: 0.3px;
 }
+
+@media (max-width: 768px) {
+  .download-page {
+    padding: 32px 16px;
+  }
+
+  .download-card {
+    padding: 40px 24px 36px;
+  }
+
+  .download-title {
+    font-size: 24px;
+  }
+
+  .download-info {
+    padding: 0;
+  }
+
+  .info-row {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .download-card {
+    padding: 32px 16px 28px;
+    border-radius: 12px;
+  }
+
+  .download-title {
+    font-size: 20px;
+  }
+
+  .download-subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .download-info {
+    gap: 8px;
+  }
+
+  .info-label,
+  .info-value {
+    font-size: 12px;
+  }
+
+  .download-btn {
+    font-size: 13px;
+    padding: 14px 24px;
+  }
+}
