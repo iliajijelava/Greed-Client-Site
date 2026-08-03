@@ -1,0 +1,259 @@
+<section class="events-page">
+  <header class="events-header">
+    <div class="events-heading">
+      <h1 class="events-title">События</h1>
+      <p class="events-subtitle">Отслеживайте ивенты на серверах FunTime в реальном времени</p>
+    </div>
+    <div class="events-stats">
+      <div class="stat">
+        <span class="stat-value">{{ totalEvents() }}</span>
+        <span class="stat-label">Событий</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{ activeServersCount() }}</span>
+        <span class="stat-label">Серверов</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="featured-area">
+    @for (item of featuredArray(); track item.key) {
+      <article class="featured-card">
+        <div class="featured-top">
+          <div class="featured-tags">
+            <span class="badge" [class.badge-user]="item.event['event-type'] === 'user'">
+              {{ typeRu(item.event) }}
+            </span>
+            <span class="badge badge-phase">{{ phaseRu(item.event.phase) }}</span>
+          </div>
+          <button class="featured-close" (click)="select(item.key)" title="Закрыть">✕</button>
+        </div>
+
+        <div class="featured-body">
+          <div class="featured-info">
+            <span class="featured-server">{{ item.server }}</span>
+            <h2 class="featured-name">{{ eventNameRu(item.event.id) }}</h2>
+          </div>
+          <div class="featured-right">
+            <div class="featured-loot">
+              <span class="card-label">Лут</span>
+              <span class="featured-loot-value">{{ lootLabel(item.event) }}</span>
+            </div>
+            <div class="featured-timer">
+              <span class="card-label">Осталось</span>
+              <span class="featured-time">{{ formatTime(timeLeft(item.event)) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-bottom">
+          @if (item.event['location-event']; as loc) {
+            <span class="coords">X {{ loc.x }} · Y {{ loc.y }} · Z {{ loc.z }}</span>
+          } @else {
+            <span class="coords coords-hidden">Координаты скрыты</span>
+          }
+          <span class="announced" [class.announced-off]="!isAnnounced(item.event)">
+            {{ isAnnounced(item.event) ? 'Объявлено' : 'Скрыто' }}
+          </span>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-row">
+      <span class="filter-label">Тип</span>
+      @for (option of filterOptions; track option.value) {
+        <button class="filter-btn" [class.active]="filterType() === option.value" (click)="setFilter(option.value)">
+          {{ option.label }}
+        </button>
+      }
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Серия</span>
+      <button class="filter-btn" [class.active]="seriesFilter() === null" (click)="setSeries(null)">Все</button>
+      @for (series of availableSeries(); track series) {
+        <button class="filter-btn" [class.active]="seriesFilter() === series" (click)="setSeries(series)">
+          {{ seriesLabel(series) }}
+        </button>
+      }
+    </div>
+
+    <div class="filter-row">
+      <span class="filter-label">Ивенты</span>
+      <div class="dropdown" [class.open]="nameFilterOpen()">
+        <button class="filter-btn dropdown-toggle" (click)="nameFilterOpen.set(!nameFilterOpen())">
+          {{ filterCountLabel() }}
+          <i class="caret"></i>
+        </button>
+        @if (nameFilterOpen()) {
+          <div class="dropdown-backdrop" (click)="nameFilterOpen.set(false)"></div>
+          <div class="dropdown-menu">
+            <div class="dropdown-head">
+              <span>Фильтр ивентов</span>
+              <button class="dropdown-clear" (click)="clearNameFilter()">Сбросить</button>
+            </div>
+            <div class="dropdown-tabs">
+              <button class="tab-btn" [class.active]="nameTab() === 'name'" (click)="nameTab.set('name')">
+                По названию
+              </button>
+              <button class="tab-btn" [class.active]="nameTab() === 'server'" (click)="nameTab.set('server')">
+                По серверу
+              </button>
+            </div>
+            @if (nameTab() === 'name') {
+              <div class="dropdown-body">
+                @for (item of availableEventNames(); track item.id) {
+                  <label class="dropdown-item">
+                    <input type="checkbox" [checked]="nameFilter().has(item.id)" (change)="toggleName(item.id)" />
+                    <span>{{ item.label }}</span>
+                  </label>
+                }
+              </div>
+            } @else {
+              <div class="dropdown-body">
+                @for (group of availableServers(); track group.series) {
+                  <div class="dropdown-section">
+                    <span class="dropdown-section-label">{{ group.label }}</span>
+                    @for (name of group.names; track name) {
+                      <label class="dropdown-item">
+                        <input
+                          type="checkbox"
+                          [checked]="serverFilter().has(name)"
+                          (change)="toggleServer(name)"
+                        />
+                        <span>{{ name }}</span>
+                      </label>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="events-layout">
+    <aside class="map-panel">
+      @if (loading()) {
+        <div class="state">Загрузка карты...</div>
+      } @else if (error()) {
+        <div class="state state-error">{{ error() }}</div>
+      } @else {
+        @if (mapDots().length > 0) {
+          <svg class="map" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+            <rect class="map-bg" x="0" y="0" width="640" height="640" />
+            @for (line of gridLines(); track $index) {
+              <line class="map-grid" [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" />
+            }
+            <text class="map-label" x="64" y="50">{{ mapBounds()?.minX }}, {{ mapBounds()?.minZ }}</text>
+            <text class="map-label map-label-end" x="576" y="50">{{ mapBounds()?.maxX }}, {{ mapBounds()?.minZ }}</text>
+            <text class="map-label" x="64" y="614">{{ mapBounds()?.minX }}, {{ mapBounds()?.maxZ }}</text>
+            <text class="map-label map-label-end" x="576" y="614">{{ mapBounds()?.maxX }}, {{ mapBounds()?.maxZ }}</text>
+
+            @for (dot of mapDots(); track dot.key) {
+              <g class="map-dot" [class.selected]="isSelected(dot.key)" (click)="select(dot.key)">
+                <circle class="map-dot-pulse" [attr.cx]="dot.cx" [attr.cy]="dot.cy" r="6" />
+                <circle class="map-dot-core" [attr.cx]="dot.cx" [attr.cy]="dot.cy" r="4" />
+                <text class="map-dot-label" [attr.x]="dot.cx" [attr.y]="dot.cy - 14" text-anchor="middle">
+                  {{ dot.server }}
+                </text>
+              </g>
+            }
+          </svg>
+          <div class="map-legend">
+            <span class="legend-item"><i class="legend-mark legend-mark-system"></i> Системные</span>
+            <span class="legend-item"><i class="legend-mark legend-mark-user"></i> Пользовательские</span>
+            <span class="legend-hint">Клик по метке — детали ивента</span>
+          </div>
+        } @else {
+          <div class="state">Сейчас нет ивентов с координатами</div>
+        }
+      }
+    </aside>
+
+    <div class="events-list">
+      @if (loading()) {
+        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+          <div class="card skeleton"></div>
+        }
+      } @else if (error()) {
+        <div class="state state-error">{{ error() }}</div>
+      } @else {
+        @for (group of serverGroups(); track group.series) {
+          <div class="server-group">
+            <div
+              class="series-head"
+              [class.active]="seriesFilter() === group.series"
+              (click)="setSeries(group.series)"
+              title="Показать только серию {{ group.label }}"
+            >
+              <span class="series-badge">{{ group.label }}</span>
+              <span class="server-count">{{ group.servers.length }} серв.</span>
+            </div>
+
+            @for (server of group.servers; track server.server) {
+              <div
+                class="server-head"
+                [class.active]="serverFilter().has(server.server)"
+                (click)="serverOnly(server.server)"
+                title="Показать только {{ server.server }}"
+              >
+                <span class="server-dot"></span>
+                <span class="server-name">{{ server.server }}</span>
+                <span class="server-count">{{ server.events.length }}</span>
+              </div>
+
+              @for (event of server.events; track $index) {
+                <article
+                  class="event-card"
+                  [class.selected]="isSelected(server.server + ':' + $index)"
+                  (click)="select(server.server + ':' + $index)"
+                >
+                  <div class="card-top">
+                    <div class="card-tags">
+                      <span class="badge" [class.badge-user]="event['event-type'] === 'user'">
+                        {{ typeRu(event) }}
+                      </span>
+                      <span class="badge badge-phase">{{ phaseRu(event.phase) }}</span>
+                    </div>
+                    <span class="card-id">{{ eventNameRu(event.id) }}</span>
+                  </div>
+
+                  <div class="card-middle">
+                    <div class="card-loot">
+                      <span class="card-label">Лут</span>
+                      <span class="card-loot-value">{{ lootLabel(event) }}</span>
+                    </div>
+                    <div class="card-timer">
+                      <span class="card-label">Осталось</span>
+                      <span class="card-time">{{ formatTime(timeLeft(event)) }}</span>
+                    </div>
+                  </div>
+
+                  <div class="card-bottom">
+                    @if (event['location-event']; as loc) {
+                      <span class="coords">X {{ loc.x }} · Y {{ loc.y }} · Z {{ loc.z }}</span>
+                    } @else {
+                      <span class="coords coords-hidden">Координаты скрыты</span>
+                    }
+                    <span class="announced" [class.announced-off]="!isAnnounced(event)">
+                      {{ isAnnounced(event) ? 'Объявлено' : 'Скрыто' }}
+                    </span>
+                  </div>
+                </article>
+              }
+            }
+          </div>
+        }
+
+        @if (totalEvents() === 0) {
+          <div class="state">Сейчас нет активных ивентов</div>
+        }
+      }
+    </div>
+  </div>
+</section>

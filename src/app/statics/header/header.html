@@ -1,14 +1,16 @@
 <header class="header">
-  <div class="header-inner" style:cursor:pointer;>
+  <div class="header-inner">
     <div class="header-left" routerLink="/main">
       <img src="favicon.ico" alt="Greed" class="site-icon">
       <span class="logo">Greed</span>
     </div>
 
-    <div class="header-right">
-      <h2 class="fbtn" routerLink="/download"><i class="fa-solid fa-arrow-down"></i> Download</h2>
-
-      <h2 class="btn "><i class="fa-solid fa-user"></i> Authorization</h2>
-    </div>
+    <nav class="header-right">
+      <a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a>
+      <a class="nav-link" routerLink="/download" routerLinkActive="active">
+        <i class="fa-solid fa-arrow-down"></i> Download
+      </a>
+      <button class="btn-auth"><i class="fa-solid fa-user"></i> Authorization</button>
+    </nav>
   </div>
 </header>

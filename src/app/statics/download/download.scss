@@ -7,161 +7,99 @@
 }
 
 .download-card {
-  max-width: 420px;
+  max-width: 380px;
   width: 100%;
-  text-align: center;
-  padding: 56px 40px 48px;
-  // border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.download-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 28px;
-  font-size: 28px;
-  color: rgba(255, 255, 255, 0.6);
+  padding: 44px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .download-title {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #ffffff;
-  margin-bottom: 8px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #f2f2f2;
+  margin-bottom: 6px;
 }
 
 .download-subtitle {
-  font-size: 15px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
   margin-bottom: 36px;
-  letter-spacing: 0.5px;
 }
 
 .download-info {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   margin-bottom: 36px;
-  padding: 0 12px;
 }
 
 .info-row {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  padding: 10px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.02);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  &:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
 }
 
-.info-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 1px;
+.info-row dt {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
 }
 
-.info-value {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+.info-row dd {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .download-btn {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
   width: 100%;
-  padding: 16px 32px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 15px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  transition: all 0.25s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
   }
 }
 
 .download-note {
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.2);
-  margin-top: 20px;
-  letter-spacing: 0.3px;
-}
-
-@media (max-width: 768px) {
-  .download-page {
-    padding: 32px 16px;
-  }
-
-  .download-card {
-    padding: 40px 24px 36px;
-  }
-
-  .download-title {
-    font-size: 24px;
-  }
-
-  .download-info {
-    padding: 0;
-  }
-
-  .info-row {
-    padding: 8px 12px;
-  }
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 480px) {
+  .download-page {
+    padding: 32px 20px;
+  }
+
   .download-card {
-    padding: 32px 16px 28px;
-    border-radius: 12px;
+    padding: 36px 24px;
+    border-radius: 16px;
   }
 
   .download-title {
-    font-size: 20px;
-  }
-
-  .download-subtitle {
-    font-size: 13px;
-    margin-bottom: 24px;
-  }
-
-  .download-info {
-    gap: 8px;
-  }
-
-  .info-label,
-  .info-value {
-    font-size: 12px;
-  }
-
-  .download-btn {
-    font-size: 13px;
-    padding: 14px 24px;
+    font-size: 30px;
   }
 }

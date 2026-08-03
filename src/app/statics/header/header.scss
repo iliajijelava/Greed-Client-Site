@@ -6,20 +6,11 @@
   z-index: 1000;
   padding: 0 48px;
   height: 72px;
-  background: rgba(24, 26, 31, 0.85);
+  background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    // background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-  }
 }
 
 .header-inner {
@@ -42,7 +33,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -54,85 +45,71 @@
   letter-spacing: 4px;
   text-transform: uppercase;
   color: #ffffff;
-}
-
-.header-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
 }
 
-.btn {
+.nav-link {
+  position: relative;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  padding: 8px 2px;
+  cursor: pointer;
+  transition: color 0.25s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 2px;
+    height: 1px;
+    background: #fff;
+    transition: right 0.3s ease;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:hover::after,
+  &.active::after {
+    right: 0;
+  }
+
+  &.active {
+    color: #fff;
+  }
+}
+
+.btn-auth {
   font-family: 'Rajdhani', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  padding: 10px 28px;
-  border-radius: 6px;
+  color: #000;
+  background: #fff;
+  border: 1px solid #fff;
+  padding: 10px 24px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
-  }
-
-  &:hover::before {
-    left: 100%;
-  }
-}
-.fbtn{
-  cursor: pointer;
-  font-size: 20px;
-  transition: all 0.3s ease;
-  &:hover {
-    color: rgb(235, 235, 235);
-    transform: translateY(-2px);
-  }
-}
-.btn-download {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(138, 43, 226, 0.15));
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  color: #00ffff;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  transition: all 0.25s ease;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(0, 255, 255, 0.25), rgba(138, 43, 226, 0.25));
-    border-color: #00ffff;
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.15), inset 0 0 30px rgba(0, 255, 255, 0.05);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-.btn-auth {
-  color: white;
-  border-color:rgba(138, 43, 226, 0.3);
-  background: #1F1D1D;
-  &:hover {
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background: transparent;
+    color: #fff;
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.15);
   }
 }
 
@@ -164,28 +141,29 @@
   }
 
   .header-right {
-    gap: 8px;
+    gap: 12px;
   }
 
-  .btn {
+  .nav-link {
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .btn-auth {
     font-size: 12px;
     padding: 8px 16px;
     letter-spacing: 1px;
   }
-
-  .fbtn {
-    font-size: 16px;
-  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
   .header {
     padding: 0 12px;
     height: 56px;
   }
 
   .logo {
-    font-size: 16px;
+    font-size: 15px;
     letter-spacing: 1px;
   }
 
@@ -198,13 +176,22 @@
     gap: 8px;
   }
 
-  .btn {
+  .header-right {
+    gap: 8px;
+  }
+
+  .nav-link {
     font-size: 11px;
-    padding: 6px 12px;
     letter-spacing: 0.5px;
   }
 
-  .fbtn {
-    font-size: 14px;
+  .nav-link i {
+    display: none;
+  }
+
+  .btn-auth {
+    font-size: 11px;
+    padding: 6px 12px;
+    letter-spacing: 0.5px;
   }
 }
