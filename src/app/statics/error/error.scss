@@ -5,7 +5,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: #0a0a0f;
+  background: var(--bg);
 }
 
 .error-grid {
@@ -36,8 +36,8 @@
 
 .error-icon i {
   font-size: 48px;
-  color: #555;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
+  color: var(--muted);
+  filter: drop-shadow(0 0 20px rgba(128, 128, 128, 0.15));
 }
 
 @keyframes cube-float {
@@ -51,13 +51,13 @@
   font-size: 140px;
   font-weight: 900;
   line-height: 1;
-  color: #fff;
+  color: var(--text);
   margin: 0 0 8px;
   position: relative;
   letter-spacing: 4px;
   text-shadow:
-    0 0 40px rgba(255, 255, 255, 0.08),
-    0 0 80px rgba(255, 255, 255, 0.04);
+    0 0 40px rgba(128, 128, 128, 0.25),
+    0 0 80px rgba(128, 128, 128, 0.15);
   animation: fade-in 0.6s ease-out;
 }
 
@@ -73,14 +73,14 @@
 }
 
 .error-code::before {
-  color: #666;
+  color: var(--muted-2);
   z-index: -1;
   animation: glitch-top 2.5s infinite;
   clip-path: inset(0 0 70% 0);
 }
 
 .error-code::after {
-  color: #999;
+  color: var(--muted);
   z-index: -2;
   animation: glitch-bottom 2.5s infinite;
   clip-path: inset(60% 0 0 0);
@@ -113,7 +113,7 @@
   font-weight: 700;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #888;
+  color: var(--muted);
   margin: 0 0 20px;
   animation: fade-in 0.6s ease-out 0.1s both;
 }
@@ -122,7 +122,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 18px;
   font-weight: 500;
-  color: #666;
+  color: var(--muted);
   line-height: 1.6;
   margin: 0 0 40px;
   animation: fade-in 0.6s ease-out 0.2s both;
@@ -138,9 +138,9 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-decoration: none;
-  color: #ccc;
+  color: var(--muted);
   padding: 12px 36px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--line-strong);
   border-radius: 6px;
   background: transparent;
   cursor: pointer;
@@ -160,18 +160,18 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.06),
+    rgba(128, 128, 128, 0.08),
     transparent
   );
   transition: left 0.5s ease;
 }
 
 .error-btn:hover {
-  color: #0a0a0f;
-  background: #fff;
-  border-color: #fff;
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
   transform: translateY(-1px);
-  box-shadow: 0 4px 24px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 24px rgba(128, 128, 128, 0.25);
 }
 
 .error-btn:hover::before {

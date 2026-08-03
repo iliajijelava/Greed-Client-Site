@@ -1,14 +1,5 @@
 :host {
   display: block;
-  --bg: #0a0a0a;
-  --panel: #0d0d0d;
-  --card: #121212;
-  --card-hover: #181818;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.22);
-  --text: #f2f2f2;
-  --muted: #8a8a8a;
-  --muted-2: #555;
   background: var(--bg);
 }
 
@@ -34,7 +25,7 @@
   letter-spacing: 8px;
   text-transform: uppercase;
   color: var(--text);
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.18);
+  text-shadow: 0 0 24px rgba(128, 128, 128, 0.18);
 }
 
 .events-subtitle {
@@ -82,10 +73,10 @@
 
 .featured-card {
   padding: 20px 24px;
-  border: 1px solid #fff;
+  border: 1px solid var(--text);
   border-radius: 14px;
-  background: linear-gradient(135deg, #171717 0%, #0e0e0e 100%);
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.08), inset 0 0 40px rgba(255, 255, 255, 0.02);
+  background: linear-gradient(135deg, var(--card-hover) 0%, var(--panel) 100%);
+  box-shadow: 0 0 40px rgba(128, 128, 128, 0.15), inset 0 0 40px rgba(128, 128, 128, 0.03);
   animation: featuredIn 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -125,8 +116,8 @@
   flex-shrink: 0;
 
   &:hover {
-    color: #fff;
-    border-color: #fff;
+    color: var(--text);
+    border-color: var(--text);
     transform: rotate(90deg);
   }
 }
@@ -160,8 +151,8 @@
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.35);
+  color: var(--text);
+  text-shadow: 0 0 24px rgba(128, 128, 128, 0.2);
 }
 
 .featured-right {
@@ -188,8 +179,8 @@
   font-size: 28px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #fff;
-  text-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+  color: var(--text);
+  text-shadow: 0 0 16px rgba(128, 128, 128, 0.25);
 }
 
 .featured-bottom {
@@ -278,8 +269,8 @@
   padding: 10px;
   border: 1px solid var(--line-strong);
   border-radius: 10px;
-  background: #0e0e0e;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  background: var(--panel);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
   animation: dropdownIn 0.25s ease;
 }
 
@@ -323,8 +314,8 @@
   transition: all 0.2s ease;
 
   &:hover {
-    color: #fff;
-    border-color: #fff;
+    color: var(--text);
+    border-color: var(--text);
   }
 }
 
@@ -350,13 +341,13 @@
 
   &:hover {
     color: var(--text);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--text);
   }
 
   &.active {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
   }
 }
 
@@ -365,7 +356,7 @@
   max-height: 300px;
   padding-right: 4px;
   scrollbar-width: thin;
-  scrollbar-color: #3a3a3a transparent;
+  scrollbar-color: var(--muted-2) transparent;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -376,11 +367,11 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #3a3a3a;
+    background: var(--muted-2);
     border-radius: 4px;
 
     &:hover {
-      background: #555;
+      background: var(--muted);
     }
   }
 }
@@ -396,7 +387,7 @@
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #fff;
+  color: var(--text);
   border-bottom: 1px solid var(--line);
   margin-bottom: 4px;
 }
@@ -415,7 +406,7 @@
   transition: background 0.2s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--card-hover);
   }
 
   input[type='checkbox'] {
@@ -431,8 +422,8 @@
     transition: all 0.2s ease;
 
     &:checked {
-      background: #fff;
-      border-color: #fff;
+      background: var(--text);
+      border-color: var(--text);
     }
 
     &:checked::after {
@@ -442,7 +433,7 @@
       top: 1px;
       width: 5px;
       height: 9px;
-      border: solid #000;
+      border: solid var(--bg);
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }
@@ -465,15 +456,15 @@
 
   &:hover {
     color: var(--text);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--text);
     transform: translateY(-1px);
   }
 
   &.active {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.25);
   }
 }
 
@@ -502,11 +493,11 @@
 }
 
 .map-bg {
-  fill: #080808;
+  fill: var(--map-bg);
 }
 
 .map-grid {
-  stroke: rgba(255, 255, 255, 0.06);
+  stroke: var(--map-grid);
   stroke-width: 1;
 }
 
@@ -526,21 +517,21 @@
 
   .map-dot-pulse {
     fill: none;
-    stroke: rgba(255, 255, 255, 0.35);
+    stroke: var(--muted);
     stroke-width: 1;
     opacity: 0;
     transition: all 0.25s ease;
   }
 
   .map-dot-core {
-    fill: #161616;
-    stroke: rgba(255, 255, 255, 0.85);
+    fill: var(--panel);
+    stroke: var(--text);
     stroke-width: 1.6;
     transition: all 0.25s ease;
   }
 
   .map-dot-label {
-    fill: #c9c9c9;
+    fill: var(--muted);
     font-family: 'Courier New', monospace;
     font-size: 10px;
     letter-spacing: 0.5px;
@@ -548,12 +539,12 @@
   }
 
   &:hover .map-dot-core {
-    fill: #fff;
+    fill: var(--text);
   }
 
   &.selected {
     .map-dot-core {
-      fill: #fff;
+      fill: var(--text);
       stroke-width: 2.4;
     }
 
@@ -600,13 +591,13 @@
 }
 
 .legend-mark-system {
-  background: #fff;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  background: var(--text);
+  box-shadow: 0 0 6px rgba(128, 128, 128, 0.5);
 }
 
 .legend-mark-user {
   background: transparent;
-  border: 1.5px solid #aaa;
+  border: 1.5px solid var(--muted);
 }
 
 .legend-hint {
@@ -641,14 +632,14 @@
   transition: all 0.25s ease;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: #161616;
+    border-color: var(--line-strong);
+    background: var(--card-hover);
     transform: translateY(-1px);
   }
 
   &.active {
-    border-color: #fff;
-    box-shadow: 0 0 0 1px #fff, 0 0 18px rgba(255, 255, 255, 0.1);
+    border-color: var(--text);
+    box-shadow: 0 0 0 1px var(--text), 0 0 18px rgba(128, 128, 128, 0.15);
   }
 }
 
@@ -657,8 +648,8 @@
   font-size: 16px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #fff;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+  color: var(--text);
+  text-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
 }
 
 .server-head {
@@ -673,12 +664,12 @@
   transition: all 0.25s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--card-hover);
   }
 
   &.active {
-    background: rgba(255, 255, 255, 0.08);
-    border-bottom-color: #fff;
+    background: var(--card-hover);
+    border-bottom-color: var(--text);
   }
 }
 
@@ -686,8 +677,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  background: var(--text);
+  box-shadow: 0 0 8px rgba(128, 128, 128, 0.5);
   flex-shrink: 0;
 }
 
@@ -727,8 +718,8 @@
   }
 
   &.selected {
-    border-color: #fff;
-    box-shadow: 0 0 0 1px #fff, 0 0 24px rgba(255, 255, 255, 0.12);
+    border-color: var(--text);
+    box-shadow: 0 0 0 1px var(--text), 0 0 24px rgba(128, 128, 128, 0.15);
   }
 }
 
@@ -751,12 +742,12 @@
   text-transform: uppercase;
   padding: 4px 10px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--line-strong);
   color: var(--text);
 }
 
 .badge-user {
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: var(--line);
   color: var(--muted);
 }
 
@@ -772,7 +763,7 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--text);
 }
 
 .card-middle {
@@ -819,8 +810,8 @@
   font-size: 22px;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #fff;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+  color: var(--text);
+  text-shadow: 0 0 12px rgba(128, 128, 128, 0.2);
 }
 
 .card-bottom {
@@ -849,8 +840,8 @@
   font-weight: 800;
   letter-spacing: 1.6px;
   text-transform: uppercase;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--text);
+  border: 1px solid var(--line-strong);
   border-radius: 20px;
   padding: 3px 10px;
   flex-shrink: 0;
@@ -872,14 +863,14 @@
 }
 
 .state-error {
-  color: #cfcfcf;
+  color: var(--text);
 }
 
 .card.skeleton {
   height: 118px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: linear-gradient(90deg, #101010 25%, #181818 50%, #101010 75%);
+  background: linear-gradient(90deg, var(--card) 25%, var(--card-hover) 50%, var(--card) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }

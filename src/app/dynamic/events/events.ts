@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { Services, type EventInfo, type EventType, type ServerEvents } from '../../services';
+import { Settings } from '../../settings';
 
 const MAP_SIZE = 640;
 const MAP_PADDING = 64;
@@ -28,6 +29,28 @@ const EVENT_NAMES_RU: Record<string, string> = {
   vulkan:"Вулкан"
 };
 
+const EVENT_NAMES_EN: Record<string, string> = {
+  airdrop: 'Air Drop',
+  air_drop: 'Air Drop',
+  'air-drop': 'Air Drop',
+  myst_beacon: 'Mystic Beacon',
+  'myst-beacon': 'Mystic Beacon',
+  mystic: 'Mystic Chest',
+  myst: 'Mystic Chest',
+  altarundead: 'Undead Altar',
+  'altar-undead': 'Undead Altar',
+  altar_undead: 'Undead Altar',
+  hellm: 'Hell Massacre',
+  hell: 'Hell Massacre',
+  creeper: 'Creeper',
+  ender: 'Ender Dragon',
+  geyser: "Geyser",
+  beacon: 'Beacon Slayer',
+  deathchest: "Death Chest",
+  "meteor_rain":"Meteor Rain",
+  vulkan:"Volcano"
+};
+
 const PHASES_RU: Record<string, string> = {
   STARTING: 'Запуск',
   ACTIVATING: 'Активация',
@@ -37,6 +60,17 @@ const PHASES_RU: Record<string, string> = {
   CLOSED: 'Закрыт',
   ENDING: 'Завершение',
   PENDING: 'Ожидание',
+};
+
+const PHASES_EN: Record<string, string> = {
+  STARTING: 'Starting',
+  ACTIVATING: 'Activating',
+  RUNNING: 'Running',
+  WAITING: 'Waiting',
+  LOOTING: 'Looting',
+  CLOSED: 'Closed',
+  ENDING: 'Ending',
+  PENDING: 'Pending',
 };
 
 interface MapDot {
@@ -67,6 +101,7 @@ interface Featured {
 })
 export class Events implements OnInit, OnDestroy {
   private readonly services = inject(Services);
+  protected readonly settings = inject(Settings);
   private readonly elRef = inject(ElementRef);
 
   readonly servers = signal<ServerEvents[]>([]);
@@ -81,11 +116,11 @@ export class Events implements OnInit, OnDestroy {
   readonly selectedKey = signal<string | null>(null);
   readonly now = signal(Date.now());
 
-  readonly filterOptions: { value: EventType; label: string }[] = [
-    { value: 'all', label: 'Все' },
-    { value: 'system', label: 'Системные' },
-    { value: 'user', label: 'Пользовательские' },
-  ];
+  readonly filterOptions = computed<{ value: EventType; label: string }[]>(() => [
+    { value: 'all', label: this.settings.t('all') },
+    { value: 'system', label: this.settings.t('system') },
+    { value: 'user', label: this.settings.t('user') },
+  ]);
 
   private startedAt = 0;
   private tickSub: Subscription | undefined;
@@ -150,8 +185,8 @@ export class Events implements OnInit, OnDestroy {
       }
     }
     return [...names]
-      .sort((a, b) => this.eventNameRu(a).localeCompare(this.eventNameRu(b), 'ru'))
-      .map((id) => ({ id, label: this.eventNameRu(id) }));
+      .sort((a, b) => this.eventName(a).localeCompare(this.eventName(b), 'ru'))
+      .map((id) => ({ id, label: this.eventName(id) }));
   });
 
   readonly availableServers = computed(() => {
@@ -250,7 +285,7 @@ export class Events implements OnInit, OnDestroy {
       next: (data) => this.loadEvents(data.response),
       error: (err) => {
         this.loading.set(false);
-        this.error.set('Не удалось получить список серверов');
+        this.error.set(this.settings.t('serverListError'));
         console.error(err);
       },
     });
@@ -281,7 +316,7 @@ export class Events implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.loading.set(false);
-          this.error.set('Не удалось получить события');
+          this.error.set(this.settings.t('eventsLoadError'));
           console.error(err);
         },
       });
@@ -335,11 +370,11 @@ export class Events implements OnInit, OnDestroy {
     const names = this.nameFilter().size;
     const servers = this.serverFilter().size;
     if (names === 0 && servers === 0) {
-      return 'Все ивенты';
+      return this.settings.t('allEvents');
     }
     const parts: string[] = [];
-    if (names > 0) parts.push(`${names} по назв.`);
-    if (servers > 0) parts.push(`${servers} по серв.`);
+    if (names > 0) parts.push(`${names} ${this.settings.t('byNameShort')}`);
+    if (servers > 0) parts.push(`${servers} ${this.settings.t('byServerShort')}`);
     return parts.join(' · ');
   }
 
@@ -386,17 +421,20 @@ export class Events implements OnInit, OnDestroy {
     return loot;
   }
 
-  typeRu(event: EventInfo): string {
-    return event['event-type'] === 'user' ? 'Пользовательский' : 'Системный';
+  typeLabel(event: EventInfo): string {
+    return event['event-type'] === 'user' ? this.settings.t('userEvent') : this.settings.t('systemEvent');
   }
 
-  eventNameRu(id?: string): string {
-    return id ? (EVENT_NAMES_RU[id] ?? id) : 'Событие';
+  eventName(id?: string): string {
+    if (!id) return this.settings.t('eventFallback');
+    const names = this.settings.language() === 'ru' ? EVENT_NAMES_RU : EVENT_NAMES_EN;
+    return names[id] ?? id;
   }
 
-  phaseRu(phase?: string): string {
+  phase(phase?: string): string {
     if (!phase) return '—';
-    return PHASES_RU[phase.toUpperCase()] ?? phase;
+    const phases = this.settings.language() === 'ru' ? PHASES_RU : PHASES_EN;
+    return phases[phase.toUpperCase()] ?? phase;
   }
 
   private serverNumber(name: string): number {

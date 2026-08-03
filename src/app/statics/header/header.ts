@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Settings } from '../../settings';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,5 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header.scss',
 })
 export class Header {
-  protected readonly currentLang = signal<'en' | 'ru'>('en');
-
-  protected toggleLang(): void {
-    this.currentLang.set(this.currentLang() === 'en' ? 'ru' : 'en');
-  }
+  protected readonly settings = inject(Settings);
 }

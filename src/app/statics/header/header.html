@@ -6,11 +6,29 @@
     </div>
 
     <nav class="header-right">
-      <a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a>
+      <a class="nav-link" routerLink="/events" routerLinkActive="active">{{ settings.t('events') }}</a>
       <a class="nav-link" routerLink="/download" routerLinkActive="active">
-        <i class="fa-solid fa-arrow-down"></i> Download
+        <i class="fa-solid fa-arrow-down"></i> {{ settings.t('download') }}
       </a>
-      <button class="btn-auth"><i class="fa-solid fa-user"></i> Authorization</button>
+      <button class="btn-auth"><i class="fa-solid fa-user"></i> {{ settings.t('authorization') }}</button>
+
+      <div class="header-controls">
+        <button
+          class="icon-btn"
+          (click)="settings.toggleLanguage()"
+          [attr.title]="settings.language() === 'ru' ? 'Switch to English' : 'Переключить на русский'"
+        >
+          <i class="fa-solid fa-globe"></i>
+          <span>{{ settings.language() === 'ru' ? 'RU' : 'EN' }}</span>
+        </button>
+        <button
+          class="icon-btn"
+          (click)="settings.toggleTheme()"
+          [attr.title]="settings.theme() === 'dark' ? 'Светлая тема' : 'Тёмная тема'"
+        >
+          <i class="fa-solid" [class.fa-sun]="settings.theme() === 'dark'" [class.fa-moon]="settings.theme() === 'light'"></i>
+        </button>
+      </div>
     </nav>
   </div>
 </header>

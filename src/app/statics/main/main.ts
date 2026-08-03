@@ -1,12 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Settings } from '../../settings';
 
 @Component({
   selector: 'app-main',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './main.html',
   styleUrl: './main.scss',
 })
 export class Main {
+  protected readonly settings = inject(Settings);
   protected readonly slides = Array.from({ length: 6 }, (_, i) => `carousel/slide${i + 1}.png`);
   protected readonly currentIndex = signal(1);
   protected readonly lightboxOpen = signal(false);

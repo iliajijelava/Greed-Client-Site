@@ -1,17 +1,17 @@
 <section class="events-page">
   <header class="events-header">
     <div class="events-heading">
-      <h1 class="events-title">События</h1>
-      <p class="events-subtitle">Отслеживайте ивенты на серверах FunTime в реальном времени</p>
+      <h1 class="events-title">{{ settings.t('events') }}</h1>
+      <p class="events-subtitle">{{ settings.t('eventsSubtitle') }}</p>
     </div>
     <div class="events-stats">
       <div class="stat">
         <span class="stat-value">{{ totalEvents() }}</span>
-        <span class="stat-label">Событий</span>
+        <span class="stat-label">{{ settings.t('statEvents') }}</span>
       </div>
       <div class="stat">
         <span class="stat-value">{{ activeServersCount() }}</span>
-        <span class="stat-label">Серверов</span>
+        <span class="stat-label">{{ settings.t('statServers') }}</span>
       </div>
     </div>
   </header>
@@ -22,25 +22,25 @@
         <div class="featured-top">
           <div class="featured-tags">
             <span class="badge" [class.badge-user]="item.event['event-type'] === 'user'">
-              {{ typeRu(item.event) }}
+              {{ typeLabel(item.event) }}
             </span>
-            <span class="badge badge-phase">{{ phaseRu(item.event.phase) }}</span>
+            <span class="badge badge-phase">{{ phase(item.event.phase) }}</span>
           </div>
-          <button class="featured-close" (click)="select(item.key)" title="Закрыть">✕</button>
+          <button class="featured-close" (click)="select(item.key)" title="{{ settings.t('close') }}">✕</button>
         </div>
 
         <div class="featured-body">
           <div class="featured-info">
             <span class="featured-server">{{ item.server }}</span>
-            <h2 class="featured-name">{{ eventNameRu(item.event.id) }}</h2>
+            <h2 class="featured-name">{{ eventName(item.event.id) }}</h2>
           </div>
           <div class="featured-right">
             <div class="featured-loot">
-              <span class="card-label">Лут</span>
+              <span class="card-label">{{ settings.t('loot') }}</span>
               <span class="featured-loot-value">{{ lootLabel(item.event) }}</span>
             </div>
             <div class="featured-timer">
-              <span class="card-label">Осталось</span>
+              <span class="card-label">{{ settings.t('remaining') }}</span>
               <span class="featured-time">{{ formatTime(timeLeft(item.event)) }}</span>
             </div>
           </div>
@@ -50,10 +50,10 @@
           @if (item.event['location-event']; as loc) {
             <span class="coords">X {{ loc.x }} · Y {{ loc.y }} · Z {{ loc.z }}</span>
           } @else {
-            <span class="coords coords-hidden">Координаты скрыты</span>
+            <span class="coords coords-hidden">{{ settings.t('coordsHidden') }}</span>
           }
           <span class="announced" [class.announced-off]="!isAnnounced(item.event)">
-            {{ isAnnounced(item.event) ? 'Объявлено' : 'Скрыто' }}
+            {{ isAnnounced(item.event) ? settings.t('announced') : settings.t('hidden') }}
           </span>
         </div>
       </article>
@@ -62,8 +62,8 @@
 
   <div class="filter-bar">
     <div class="filter-row">
-      <span class="filter-label">Тип</span>
-      @for (option of filterOptions; track option.value) {
+      <span class="filter-label">{{ settings.t('filterType') }}</span>
+      @for (option of filterOptions(); track option.value) {
         <button class="filter-btn" [class.active]="filterType() === option.value" (click)="setFilter(option.value)">
           {{ option.label }}
         </button>
@@ -71,8 +71,8 @@
     </div>
 
     <div class="filter-row">
-      <span class="filter-label">Серия</span>
-      <button class="filter-btn" [class.active]="seriesFilter() === null" (click)="setSeries(null)">Все</button>
+      <span class="filter-label">{{ settings.t('filterSeries') }}</span>
+      <button class="filter-btn" [class.active]="seriesFilter() === null" (click)="setSeries(null)">{{ settings.t('all') }}</button>
       @for (series of availableSeries(); track series) {
         <button class="filter-btn" [class.active]="seriesFilter() === series" (click)="setSeries(series)">
           {{ seriesLabel(series) }}
@@ -81,7 +81,7 @@
     </div>
 
     <div class="filter-row">
-      <span class="filter-label">Ивенты</span>
+      <span class="filter-label">{{ settings.t('filterEvents') }}</span>
       <div class="dropdown" [class.open]="nameFilterOpen()">
         <button class="filter-btn dropdown-toggle" (click)="nameFilterOpen.set(!nameFilterOpen())">
           {{ filterCountLabel() }}
@@ -91,15 +91,15 @@
           <div class="dropdown-backdrop" (click)="nameFilterOpen.set(false)"></div>
           <div class="dropdown-menu">
             <div class="dropdown-head">
-              <span>Фильтр ивентов</span>
-              <button class="dropdown-clear" (click)="clearNameFilter()">Сбросить</button>
+              <span>{{ settings.t('eventFilter') }}</span>
+              <button class="dropdown-clear" (click)="clearNameFilter()">{{ settings.t('reset') }}</button>
             </div>
             <div class="dropdown-tabs">
               <button class="tab-btn" [class.active]="nameTab() === 'name'" (click)="nameTab.set('name')">
-                По названию
+                {{ settings.t('byName') }}
               </button>
               <button class="tab-btn" [class.active]="nameTab() === 'server'" (click)="nameTab.set('server')">
-                По серверу
+                {{ settings.t('byServer') }}
               </button>
             </div>
             @if (nameTab() === 'name') {
@@ -139,7 +139,7 @@
   <div class="events-layout">
     <aside class="map-panel">
       @if (loading()) {
-        <div class="state">Загрузка карты...</div>
+        <div class="state">{{ settings.t('loadingMap') }}</div>
       } @else if (error()) {
         <div class="state state-error">{{ error() }}</div>
       } @else {
@@ -165,12 +165,12 @@
             }
           </svg>
           <div class="map-legend">
-            <span class="legend-item"><i class="legend-mark legend-mark-system"></i> Системные</span>
-            <span class="legend-item"><i class="legend-mark legend-mark-user"></i> Пользовательские</span>
-            <span class="legend-hint">Клик по метке — детали ивента</span>
+            <span class="legend-item"><i class="legend-mark legend-mark-system"></i> {{ settings.t('systemEvents') }}</span>
+            <span class="legend-item"><i class="legend-mark legend-mark-user"></i> {{ settings.t('userEvents') }}</span>
+            <span class="legend-hint">{{ settings.t('clickDotForDetails') }}</span>
           </div>
         } @else {
-          <div class="state">Сейчас нет ивентов с координатами</div>
+          <div class="state">{{ settings.t('noCoordsEvents') }}</div>
         }
       }
     </aside>
@@ -189,10 +189,10 @@
               class="series-head"
               [class.active]="seriesFilter() === group.series"
               (click)="setSeries(group.series)"
-              title="Показать только серию {{ group.label }}"
+              title="{{ settings.t('showOnlySeries') }} {{ group.label }}"
             >
               <span class="series-badge">{{ group.label }}</span>
-              <span class="server-count">{{ group.servers.length }} серв.</span>
+              <span class="server-count">{{ group.servers.length }} {{ settings.t('serverShort') }}</span>
             </div>
 
             @for (server of group.servers; track server.server) {
@@ -200,7 +200,7 @@
                 class="server-head"
                 [class.active]="serverFilter().has(server.server)"
                 (click)="serverOnly(server.server)"
-                title="Показать только {{ server.server }}"
+                title="{{ settings.t('showOnlyServer') }} {{ server.server }}"
               >
                 <span class="server-dot"></span>
                 <span class="server-name">{{ server.server }}</span>
@@ -216,20 +216,20 @@
                   <div class="card-top">
                     <div class="card-tags">
                       <span class="badge" [class.badge-user]="event['event-type'] === 'user'">
-                        {{ typeRu(event) }}
+                        {{ typeLabel(event) }}
                       </span>
-                      <span class="badge badge-phase">{{ phaseRu(event.phase) }}</span>
+                      <span class="badge badge-phase">{{ phase(event.phase) }}</span>
                     </div>
-                    <span class="card-id">{{ eventNameRu(event.id) }}</span>
+                    <span class="card-id">{{ eventName(event.id) }}</span>
                   </div>
 
                   <div class="card-middle">
                     <div class="card-loot">
-                      <span class="card-label">Лут</span>
+                      <span class="card-label">{{ settings.t('loot') }}</span>
                       <span class="card-loot-value">{{ lootLabel(event) }}</span>
                     </div>
                     <div class="card-timer">
-                      <span class="card-label">Осталось</span>
+                      <span class="card-label">{{ settings.t('remaining') }}</span>
                       <span class="card-time">{{ formatTime(timeLeft(event)) }}</span>
                     </div>
                   </div>
@@ -238,10 +238,10 @@
                     @if (event['location-event']; as loc) {
                       <span class="coords">X {{ loc.x }} · Y {{ loc.y }} · Z {{ loc.z }}</span>
                     } @else {
-                      <span class="coords coords-hidden">Координаты скрыты</span>
+                      <span class="coords coords-hidden">{{ settings.t('coordsHidden') }}</span>
                     }
                     <span class="announced" [class.announced-off]="!isAnnounced(event)">
-                      {{ isAnnounced(event) ? 'Объявлено' : 'Скрыто' }}
+                      {{ isAnnounced(event) ? settings.t('announced') : settings.t('hidden') }}
                     </span>
                   </div>
                 </article>
@@ -251,7 +251,7 @@
         }
 
         @if (totalEvents() === 0) {
-          <div class="state">Сейчас нет активных ивентов</div>
+          <div class="state">{{ settings.t('noActiveEvents') }}</div>
         }
       }
     </div>

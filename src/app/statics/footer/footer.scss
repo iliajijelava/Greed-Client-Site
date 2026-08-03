@@ -1,7 +1,7 @@
 .footer {
-  background: #101010;
+  background: var(--panel);
   padding: 80px 48px 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--line);
 }
 
 .footer-inner {
@@ -19,7 +19,7 @@
   font-size: 40px;
   font-weight: 900;
   letter-spacing: 6px;
-  color: #ffffff;
+  color: var(--text);
   text-transform: uppercase;
 }
 
@@ -34,7 +34,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text);
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 20px;
@@ -52,12 +52,12 @@
     font-family: 'Rajdhani', sans-serif;
     font-size: 15px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.45);
+    color: var(--muted);
     text-decoration: none;
     transition: color 0.3s ease;
 
     &:hover {
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--text);
     }
   }
 }
@@ -79,7 +79,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--muted);
   line-height: 1.6;
 }
 
@@ -92,14 +92,14 @@
 .footer-bottom {
   text-align: center;
   padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--line);
 }
 
 .footer-copy {
   font-family: 'Rajdhani', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--muted-2);
   letter-spacing: 0.5px;
 }
 

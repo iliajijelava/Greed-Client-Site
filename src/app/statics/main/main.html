@@ -1,30 +1,35 @@
 <section class="hero">
   <div class="hero-content">
-    <h1 class="hero-title">About us</h1>
-    <p class="hero-description">
-      We provide you with the best client for a comfortable gaming that will give you the best gaming experience.
-    </p>
+    <span class="hero-eyebrow">{{ settings.t('tagline') }}</span>
+    <h1 class="hero-title">{{ settings.t('aboutTitle') }}</h1>
+    <p class="hero-description">{{ settings.t('aboutDesc') }}</p>
     <div class="hero-actions">
-      <button class="btn btn-auth"><i class="fa-solid fa-bag-shopping"></i> Authorization</button>
-      <a href="https://t.me/greedvlog" target="_blank" rel="noopener noreferrer" class="btn btn-more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+      <a routerLink="/download" class="btn btn-download">
+        <i class="fa-solid fa-arrow-down"></i>
+        {{ settings.t('download') }}
+      </a>
+      <a
+        href="https://t.me/greedvlog"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-more"
+      >
+        {{ settings.t('readMore') }} <i class="fa-solid fa-arrow-right"></i>
+      </a>
     </div>
   </div>
+
   <div class="hero-image">
     <div class="carousel">
-      <button class="carousel-btn carousel-btn-left" (click)="prev()">
+      <button class="carousel-btn carousel-btn-left" (click)="prev()" aria-label="Назад">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
       <div class="carousel-track" [style.transform]="'translateX(-' + currentIndex() * 100 + '%)'">
         @for (slide of slides; track slide) {
-          <img
-            [src]="slide"
-            alt="Slide {{ $index + 1 }}"
-            class="carousel-slide"
-            (click)="openLightbox($index)"
-          >
+          <img [src]="slide" alt="Slide {{ $index + 1 }}" class="carousel-slide" (click)="openLightbox($index)">
         }
       </div>
-      <button class="carousel-btn carousel-btn-right" (click)="next()">
+      <button class="carousel-btn carousel-btn-right" (click)="next()" aria-label="Вперёд">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
@@ -38,14 +43,14 @@
 
 @if (lightboxOpen()) {
   <div class="lightbox" (click)="closeLightbox()">
-    <button class="lightbox-close" (click)="closeLightbox()">
+    <button class="lightbox-close" (click)="closeLightbox()" aria-label="Закрыть">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <button class="lightbox-btn lightbox-btn-left" (click)="lightboxPrev($event)">
+    <button class="lightbox-btn lightbox-btn-left" (click)="lightboxPrev($event)" aria-label="Назад">
       <i class="fa-solid fa-chevron-left"></i>
     </button>
     <img [src]="slides[lightboxIndex()]" alt="Full" class="lightbox-image">
-    <button class="lightbox-btn lightbox-btn-right" (click)="lightboxNext($event)">
+    <button class="lightbox-btn lightbox-btn-right" (click)="lightboxNext($event)" aria-label="Вперёд">
       <i class="fa-solid fa-chevron-right"></i>
     </button>
     <div class="lightbox-counter">{{ lightboxIndex() + 1 }} / {{ slides.length }}</div>

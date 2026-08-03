@@ -10,22 +10,22 @@
   max-width: 380px;
   width: 100%;
   padding: 44px 40px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--line);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card);
 }
 
 .download-title {
   font-family: 'Rajdhani', sans-serif;
   font-size: 36px;
   font-weight: 700;
-  color: #f2f2f2;
+  color: var(--text);
   margin-bottom: 6px;
 }
 
 .download-subtitle {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--muted);
   margin-bottom: 36px;
 }
 
@@ -38,22 +38,22 @@
   align-items: baseline;
   justify-content: space-between;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--line);
 
   &:first-child {
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--line);
   }
 }
 
 .info-row dt {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--muted);
 }
 
 .info-row dd {
   font-size: 15px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text);
 }
 
 .download-btn {
@@ -64,10 +64,10 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   padding: 15px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--line-strong);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.9);
+  background: var(--card-hover);
+  color: var(--text);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -76,9 +76,9 @@
   transition: all 0.25s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
   }
 }
 
@@ -86,7 +86,7 @@
   margin-top: 18px;
   text-align: center;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--muted-2);
 }
 
 @media (max-width: 480px) {
